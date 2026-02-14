@@ -35,7 +35,7 @@ These are the existing products in the Dopamine Labs portfolio. Know them well �
 ## Idea Lifecycle
 
 ```
-inbox/ → ideas/<name>/ → promoted/ | parked/ | killed/
+inbox/ → ideas/<name>/ → tri-model review → promoted/ | parked/ | killed/
 ```
 
 ### 1. Inbox
@@ -46,14 +46,44 @@ When an idea has legs, promote it to `ideas/<idea-name>/` with:
 - `CAPTURE.md` — the original dump, preserved verbatim
 - `SCOPING.md` — structured assessment using the template in `ideas/_template/`
 
-### 3. Decision
-After scoping, the idea gets one of three outcomes:
+### 3. Tri-Model Review
+Completed SCOPING.md is reviewed adversarially by Claude, GPT, and Gemini. Findings captured in `TRI-MODEL-REVIEW.md`. SCOPING.md updated with surfaced issues.
+
+### 4. Decision
+After review, the idea gets one of three outcomes:
 - **Promoted** → Moved to `promoted/` with a summary and a completed `MARKETING-BRIEF.md`. No idea goes to build without a marketing brief.
 - **Parked** → Moved to `parked/` with rationale. Revisited during periodic reviews.
 - **Killed** → Moved to `killed/` with rationale. Preserved for reference, not deleted.
 
-### 4. Review
+### 5. Review
 Weekly review sessions generate a report in `reviews/YYYY-MM-DD.md`.
+
+## Tri-Model Adversarial Review
+
+After scoping is complete and before the promote/park/kill decision, ideas go through a tri-model adversarial review. This is a hard gate — no idea gets promoted without it.
+
+**Purpose:** Surface blind spots, roadblocks, and unstated assumptions that Claude missed during scoping. This hardens the SCOPING.md itself. This is distinct from MAI's adversarial plan review, which hardens the build plan — different stage, different purpose.
+
+**Process:**
+1. Andy (or Claude) prepares the SCOPING.md for review
+2. The same scoping document and adversarial prompt are sent to all three models: Claude (Opus 4.6), GPT-4o, and Gemini 2.5 Pro
+3. Responses are captured in `ideas/<idea-name>/TRI-MODEL-REVIEW.md`
+4. Claude synthesises the findings — points of agreement, disagreements, glaze check
+5. SCOPING.md is updated with any new risks, considerations, or open questions surfaced
+6. Only then does the idea proceed to decision
+
+**When reviewing your own scoping work adversarially:**
+- Do not soften your critique because you wrote the scoping doc
+- Actively look for where you were optimistic or hand-wavy
+- Flag assumptions you made that the other models challenged
+- If GPT glazed and you didn't, note it — but also check whether GPT spotted something genuinely positive that you dismissed
+
+**Models and their tendencies (calibration notes):**
+- **Claude:** Generally strong on technical feasibility and honest assessment. Watch for over-indexing on complexity.
+- **GPT:** Tendency to glaze — treat excessive positivity as a signal to probe harder. When GPT is critical, pay extra attention because it means the issue is hard to ignore.
+- **Gemini:** Often strong on competitive landscape and market analysis. Can be verbose — extract the signal.
+
+These calibration notes should be updated over time as patterns emerge across reviews.
 
 ## Working Style
 

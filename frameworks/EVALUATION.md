@@ -52,3 +52,17 @@ Each criterion is scored 1-5. Maximum total: 40.
 - The threshold is a guide, not a rule. An idea scoring 26 with a perfect 5 on Personal Pain might still be worth building. An idea scoring 30 with a 1 on Solo Dev Viability probably isn't.
 - Revisit scores when context changes. A parked idea might score differently six months later.
 - Record every scored evaluation in `frameworks/DECISION-LOG.md`.
+
+## Tri-Model Adversarial Review
+
+Every idea that reaches a complete SCOPING.md must pass through adversarial review before a promote/park/kill decision. The same scoping document is sent to three models (Claude, GPT, Gemini) with an adversarial prompt designed to surface blind spots, roadblocks, and weaknesses.
+
+**This is a hard gate.** No idea gets promoted without a completed TRI-MODEL-REVIEW.md.
+
+**What this catches that solo scoping doesn't:**
+- Assumptions that feel obvious to the builder but aren't validated
+- Competitive threats from products the builder doesn't know about
+- Technical roadblocks that only surface when a different model reasons about the architecture
+- Market sizing delusions (especially when GPT agrees the market is small — if even the glazer can't find a big market, there isn't one)
+
+**Scoring adjustment:** If all three models flag the same critical issue, subtract 3 points from the evaluation score. If all three models independently validate the core thesis, add 2 points. These adjustments are applied after the base scoring in the evaluation criteria above.
