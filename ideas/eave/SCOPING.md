@@ -4,7 +4,7 @@
 
 **Status:** Scoped
 **Date Created:** 2026-02-13
-**Last Updated:** 2026-02-14
+**Last Updated:** 2026-02-14 (V0 capture phase added)
 **Decision:** Pending (blocked by Suppertime shipping first)
 **Domain:** eave.is
 **Suite:** S.A.F.E. — Suppertime · Adaptive Coach · Eave
@@ -14,7 +14,7 @@
 
 ## Vision
 
-Eave is a personal operations layer. It starts with email and grows into a life-management agent that can read, think, and act on your behalf. The core promise: **you never open an email again.** Over time, you never manage a password, chase a subscription, or fight a clunky website again either.
+Eave is a personal operations layer. It starts with capture and grows into a life-management agent that can read, think, and act on your behalf. The first promise: **just talk, Eave figures out where it goes.** Then: **you never open an email again.** Over time, you never manage a password, chase a subscription, or fight a clunky website again either.
 
 Built for neurodivergent brains first — people drowning in admin not because they're incapable, but because the friction of mundane digital tasks overwhelms executive function. Every version reduces friction. Every version earns more trust and more autonomy.
 
@@ -45,7 +45,29 @@ Built for neurodivergent brains first — people drowning in admin not because t
 
 ## Version Roadmap
 
-*Sequenced by pain point severity, not strict technical dependency. V1 and V2 are locked. V3–V5 resequenced from original plan to prioritise subscriptions (independent, high pain) over browser agent capabilities.*
+*Sequenced by pain point severity, not strict technical dependency. V0 ships before Suppertime is done — it's small, standalone, and validates the core UX. V1 and V2 are locked. V3–V5 resequenced from original plan to prioritise subscriptions (independent, high pain) over browser agent capabilities.*
+
+### V0 — Universal Capture
+
+**Core thesis:** Just talk. Eave figures out where it goes.
+
+- Native iOS app: one text/voice input field, one submit button
+- LLM-powered intent classification routes input to the right destination:
+  - "Idea: what if we built X" → creates markdown in idea-factory `inbox/`, commits via GitHub API
+  - "Remind me to do X" → creates a Reminder via iOS Reminders API
+  - "Email thought: tell Y about Z" → drafts a note (queued for V1 email capabilities)
+  - "Suppertime: we liked that recipe" → flags in Suppertime context (queued for integration)
+  - Unclassified → saves to a general capture log for manual triage
+- Sign in with Apple, no GitHub tokens, no API setup — zero friction for non-technical users
+- Offline capture with sync when back online
+- Siri Shortcut: "Hey Eave" triggers the input
+
+**Why V0 ships first:**
+- Small build — native iOS app with one screen, one input, one API call per route
+- Validates capture-and-route as Eave's core interaction pattern before investing in email infrastructure
+- Becomes Eave's permanent front door — every future version inherits this input layer
+- Can ship while Suppertime is still in flight without competing for the same dev hours
+- Dogfooding: Andy uses it daily, proving the UX before anything else gets built
 
 ### V1 — Email Triage + Backlog Clearing
 
@@ -134,6 +156,7 @@ Built for neurodivergent brains first — people drowning in admin not because t
 
 ### Trust Ladder
 Each version earns more trust and more autonomy:
+- V0: "I'll remember that" (capture and route, no access to anything)
 - V1: "I'll sort your email" (read-only actions, archive/label/flag)
 - V2: "I'll manage your time" (create reminders, surface conflicts)
 - V3: "I'll watch your money" (read-only bank access, no spending actions)
@@ -151,17 +174,18 @@ Each version earns more trust and more autonomy:
 ## Sequencing
 
 1. **Now:** Buy eave.is. Set up `hello@andrewisherwood.com` email infrastructure.
-2. **Suppertime first:** Get Suppertime generating revenue, prove the ship-and-monetise loop.
-3. **V1 build:** Eave as email triage for Andy (user zero). Run for 1–2 months, iterate.
-4. **Eave beta:** Open to 50–100 users, same TestFlight model as Suppertime.
-5. **V2–V5:** Sequential releases, each earning trust for the next.
+2. **V0 build:** Ship the capture app. Andy dogfoods while Suppertime is still in flight. Validates core UX.
+3. **Suppertime first:** Get Suppertime generating revenue, prove the ship-and-monetise loop.
+4. **V1 build:** Eave as email triage for Andy (user zero). V0 capture app becomes the input layer. Run for 1–2 months, iterate.
+5. **Eave beta:** Open to 50–100 users, same TestFlight model as Suppertime.
+6. **V2–V5:** Sequential releases, each earning trust for the next.
 
 ---
 
 ## Open Questions
 
 - Native iOS app from day one, or start with PWA/web digest and add native later?
-- Voice interface: Siri Shortcuts integration from V1, or wait until V5?
+- ~~Voice interface: Siri Shortcuts integration from V1, or wait until V5?~~ Resolved: V0 ships with Siri Shortcut trigger.
 - LLM provider for triage classification: Claude API, local model on Mac Mini, or hybrid?
 - Open Banking provider selection for V3 (Plaid, TrueLayer, etc.)
 - Multi-user: when does Eave become available for Lily? Shared family context store or separate tenants with shared calendar visibility?
