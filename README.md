@@ -19,7 +19,7 @@ inbox/ → ideas/ → promoted/ | parked/ | killed/
 1. **Inbox** — Brain dump. A single sentence, a paragraph, a voice-to-text ramble. Drop it in `inbox/` as `YYYY-MM-DD-short-slug.md` and move on.
 2. **Scoping** — When an idea has legs, it gets promoted to `ideas/<idea-name>/` with a structured scoping document. This is where it gets stress-tested against the evaluation framework.
 3. **Decision** — Every scoped idea gets a verdict:
-   - **Promoted** — Green light. Moved to `promoted/`, a new repo gets created.
+   - **Promoted** — Green light. A `MARKETING-BRIEF.md` is completed, then moved to `promoted/` for handoff to MAI.
    - **Parked** — Not now, but not never. Moved to `parked/`, revisited during reviews.
    - **Killed** — Dead, with dignity. Moved to `killed/`, preserved for reference.
 4. **Review** — Periodic review sessions triage the inbox, reassess parked ideas, and check portfolio health.

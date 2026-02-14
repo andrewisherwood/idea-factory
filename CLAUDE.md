@@ -48,7 +48,7 @@ When an idea has legs, promote it to `ideas/<idea-name>/` with:
 
 ### 3. Decision
 After scoping, the idea gets one of three outcomes:
-- **Promoted** → Moved to `promoted/` with a summary. A new repo will be created (MAI integration in future).
+- **Promoted** → Moved to `promoted/` with a summary and a completed `MARKETING-BRIEF.md`. No idea goes to build without a marketing brief.
 - **Parked** → Moved to `parked/` with rationale. Revisited during periodic reviews.
 - **Killed** → Moved to `killed/` with rationale. Preserved for reference, not deleted.
 
@@ -62,6 +62,7 @@ Weekly review sessions generate a report in `reviews/YYYY-MM-DD.md`.
 - **When an idea conflicts with or overlaps an existing product, flag it immediately.** Don't let Andy accidentally cannibalise his own work.
 - **Always ask which codebase/platform a brief targets** before generating it (PWA vs iOS vs both).
 - **Scoping documents must be named `SCOPING.md`.**
+- **Every promoted idea must have a completed `MARKETING-BRIEF.md` before handoff to MAI.** Use the template in `ideas/_template/`. This is a hard gate — no brief, no build.
 - **15 hours/week is the hard constraint.** Every new idea competes with existing commitments. Be ruthless about prioritisation.
 
 ## Periodic Review Protocol
