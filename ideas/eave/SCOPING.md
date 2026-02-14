@@ -2,11 +2,11 @@
 
 > *The part of your house that shelters and overhears.*
 
-**Status:** Re-scoped after tri-model adversarial review
+**Status:** Re-scoped after tri-model adversarial review + reframing
 **Track:** A (Personal Tool)
 **Date Created:** 2026-02-13
-**Last Updated:** 2026-02-14 (re-scoped as Track A personal tool)
-**Decision:** Pending — evaluate V0 + V1 for personal build
+**Last Updated:** 2026-02-14 (reframed — V0 is household app ingest layer, email triage is CC workflow)
+**Decision:** V0 folded into household management app. Email triage validated as CC workflow before building product.
 **Domain:** eave.is
 **Suite:** S.A.F.E. — Suppertime · Adaptive Coach · Eave
 **Source Chat:** https://claude.ai/chat/2cc1d680-b8fb-4847-aecf-3a6f75a691a8
@@ -14,13 +14,19 @@
 
 ---
 
+> **2026-02-14 Reframing:** Eave V0 has been reframed as the ingest layer for the household management app (see `inbox/2026-02-14-household-management-app.md`). Email triage (previously V1) has been reframed as a CC workflow task, not a product feature. V2+ remains speculative future vision.
+
+---
+
 ## Vision
 
-Eave is Andy's personal operations layer. It starts with capture and grows into a life-management tool that can read, think, and act on his behalf. The first promise: **just talk, Eave figures out where it goes.** Then: **you never open an email again.**
+Eave is Andy's personal operations layer. The name and the core insight — **just talk, Eave figures out where it goes** — survive, but the shape has changed.
 
-This is a personal tool first. Built to reduce Andy's daily overwhelm — 6 email accounts, scattered capture, admin paralysis. It may become a product later if it proves valuable and there's genuine external interest, but productisation is a separate decision (Track B) that happens after the tool has earned its place.
+**V0 (capture + routing) is now the ingest layer for the household management app.** It's not a standalone tool. It's the voice/text front door that routes "Add pasta bake to next week" to Suppertime, "Flora needs PE kit tomorrow" to Tasks/Reminders, and "Book dentist" to Calendar. The capture-and-route insight is preserved but serving a specific product rather than floating on its own.
 
-Built for a neurodivergent brain — not because the market demands it, but because Andy's brain demands it. The friction of mundane digital tasks overwhelms executive function. Every version reduces friction. Every version earns more trust and more autonomy.
+**Email triage is not a product. Email is a chore.** Andy's email problem doesn't need a product — it needs a periodic task. Claude Code connects via IMAP, reads the inbox, classifies, presents a digest. Andy decides. 20 minutes on a Sunday evening. If that workflow proves insufficient, the specific gaps will reveal exactly what automation is actually needed.
+
+Built for a neurodivergent brain — not because the market demands it, but because Andy's brain demands it.
 
 ---
 
@@ -49,55 +55,55 @@ Built for a neurodivergent brain — not because the market demands it, but beca
 
 ## Version Roadmap
 
-*V0 and V1 are the build scope. V2 and V3 are plausible extensions. Everything beyond is speculative future vision.*
+*V0 is the ingest layer for the household management app. Email triage is a CC workflow, not a product version. V2+ is speculative future vision.*
 
-### V0 — Universal Capture
+### V0 — Household App Ingest Layer
 
-**Core thesis:** Just talk. Eave figures out where it goes.
+**Core thesis:** Just talk. Eave figures out which module handles it.
 
-- Native iOS app (Xcode, personal use — no App Store submission needed initially): one text/voice input field, one submit button
-- LLM-powered intent classification routes input to the right destination:
-  - "Idea: what if we built X" → creates markdown in idea-factory `inbox/`, commits via GitHub API
-  - "Remind me to do X" → creates a Reminder via iOS Reminders API
-  - "Email thought: tell Y about Z" → drafts a note (queued for V1 email capabilities)
-  - "Suppertime: we liked that recipe" → flags in Suppertime context (queued for integration)
+V0 is the voice/text front door for the household management app. It only makes sense as part of that app, not standalone.
+
+- Voice/text input via Siri Shortcut ("Hey Eave")
+- LLM-powered intent classification routes to household app modules:
+  - "Add pasta bake to next week" → **Suppertime** (meal planning)
+  - "Flora needs her PE kit tomorrow" → **Tasks** (synced with iOS Reminders)
+  - "Book dentist for Thursday" → **Calendar** (synced with iOS Calendar)
+  - "Flora earned 5 stars today" → **Rewards** (family rewards system)
+  - "Save this photo to Flora's album" → **Photos** (synced with iOS Photos)
+  - "Idea: what if we built X" → **Idea Factory** (commits to inbox/ via GitHub API)
   - Unclassified → saves to a general capture log for manual triage
-- Siri Shortcut: "Hey Eave" triggers the input
+- Memory layer learns routing preferences from corrections over time
 - Offline capture with local queue, sync when back online
 
 **Error safeguards:**
-- Confirmation prompt for any route that creates external side effects (GitHub commit, sending email draft)
+- Confirmation prompt for any route that creates external side effects (GitHub commit, calendar event)
 - "Undo last capture" action available for 60 seconds after submission
 - Unclassified captures go to a safe default (general log), never silently routed to a wrong destination
 - Classification confidence threshold — below 80%, ask Andy to confirm the route
 
-**Build estimate:** 1 weekend for the core app + routing. Iteration over the following week for edge cases.
+**Build estimate:** V0 is scoped as part of the household management app. See `inbox/2026-02-14-household-management-app.md` for the parent idea.
 
-### V1 — Email Triage + Backlog Clearing
+### Email Triage — CC Workflow (not a product)
 
-**Core thesis:** You never open an email again.
+**Status:** Parked as product. Active as workflow.
 
-- Connect email accounts (Gmail OAuth, IMAP for others)
-- Backlog blitz: Eave works through old inboxes — classifies, archives, unsubscribes, flags
-- Ongoing triage: daily digest of what matters, everything else handled silently
-- Searchable archive of all historical email (indexed, not just forwarded)
-- Context store that learns priorities over time (who matters, what's urgent, what's noise)
-- Digest delivery: push notification or iOS widget — "3 things that need you today"
+**Core thesis:** Email triage doesn't need a product. It needs a periodic task.
 
-**Triage UX (critical for AuDHD):**
-- Drip-feed by default — never more than the user's configured limit at once
-- Decision batching: related decisions grouped ("Here are 5 newsletters — keep any?")
-- Preference setting: "How do you want Eave to check in?" — daily digest / real-time max 3 questions per day / batch weekly review
-- Sensible defaults with quiet confidence — if Eave is 90%+ sure, she acts and reports rather than asking
+**The workflow:**
+- Claude Code connects to Andy's email accounts via IMAP
+- CC reads inbox, classifies by priority and type, presents a structured digest
+- Andy reviews and decides: archive, respond, flag, unsubscribe
+- Weekly "inbox zero" session — 20 minutes on a Sunday evening
+- CC does the reading, Andy does the deciding
 
-**Error recovery:**
-- Nothing is permanently deleted in the first 30 days — archived, not destroyed
-- Daily "Eave acted on these" summary with one-tap undo for any action
-- "Never auto-archive from unknown senders" rule for the first 2 weeks (learning period)
-- Escalation path: if Eave isn't sure, it asks. If it acted wrong, undo is always available.
-- Missed item safety net: weekly "Eave might have missed these" digest of low-confidence classifications
+**Why workflow over product:**
+- No OAuth verification process (IMAP with app-specific passwords)
+- No server infrastructure needed — runs on Andy's machine
+- No maintenance burden — CC handles the classification, no custom code to maintain
+- If the workflow proves insufficient, the specific gaps reveal exactly what automation is needed
+- Avoids building a product to solve a problem that might be solved by a 20-minute weekly habit
 
-**Build estimate:** 4-6 weeks. Gmail OAuth verification is the biggest unknown — Google requires privacy policy, security assessment, and manual review even for personal-use apps accessing email scopes. IMAP for Apple Mail is simpler. The LLM classification pipeline, digest generation, and backlog processing are the core build work.
+**If the workflow fails:** The failure mode will be specific — "CC can't handle X" or "weekly isn't frequent enough for Y." Those specifics inform whether a product is needed and what it should actually do, rather than building a speculative V1 based on assumptions.
 
 ### V2 — Calendar + Reminders Integration (plausible extension)
 
@@ -160,11 +166,11 @@ Consolidating accounts across services to a single `hello@` email address via au
 - Sensible defaults — if Eave is confident, act and report rather than ask
 
 ### Trust Ladder
-Each version earns more trust and more autonomy:
-- V0: "I'll remember that" (capture and route, no access to anything)
-- V1: "I'll sort your email" (read-only actions, archive/label/flag)
-- V2: "I'll manage your time" (create reminders, surface conflicts)
-- V3: "I'll surface your subscriptions" (pattern matching on existing email data)
+Each capability earns more trust and more autonomy:
+- V0: "I'll remember that" (capture and route to the right household app module)
+- Email workflow: "I'll read your email so you don't have to" (CC-assisted weekly triage)
+- V2: "I'll manage your time" (calendar + reminders integration, if V0 proves valuable)
+- V3: "I'll surface your subscriptions" (email pattern matching, if V2 proves valuable)
 
 ---
 
@@ -210,11 +216,11 @@ The biggest trust risk. Mitigation strategy:
 
 ## Sequencing
 
-1. **Now:** Buy eave.is. Set up `hello@andrewisherwood.com` email infrastructure.
-2. **V0 build:** Ship the capture app. Andy dogfoods immediately. Validates core UX.
-3. **V1 build:** After V0 is stable and in daily use. But first: try SaneBox for 2 weeks. If SaneBox is good enough, reconsider V1 scope.
-4. **V2-V3:** Only if V0 + V1 are stable, in daily use, and genuinely reducing overwhelm. Evaluated individually against Track A criteria.
-5. **Track B gate:** If Eave has been in personal use for 4+ weeks and someone else expresses interest, consider productisation via Track B evaluation.
+1. **Now:** Household management app captured in idea factory. Needs scoping.
+2. **V0:** Build as part of household management app, not standalone. The ingest layer ships when the household app ships.
+3. **Email triage:** Validate CC workflow approach. Weekly IMAP sessions. If it works, no email product needed.
+4. **V2+:** Speculative. Calendar integration, subscription surfacing. Only revisit if V0 ships as part of the household app and proves valuable.
+5. **Track B gate:** If the household management app has been in personal use for 4+ weeks and someone else expresses interest, consider productisation via Track B evaluation.
 
 ---
 
@@ -230,14 +236,16 @@ The biggest trust risk. Mitigation strategy:
 
 ## Track A Evaluation
 
+*Evaluated as the Eave concept overall — V0 ingest layer + email CC workflow.*
+
 | Criterion | Score | Rationale |
 |-----------|-------|-----------|
-| **1. Personal Pain Severity** | 5 | 6 email accounts, daily admin paralysis, ideas lost because capture is too slow. This is a daily, multi-times-daily frustration. |
-| **2. Build Simplicity** | 4 | V0 is a weekend build. V1 is 4-6 weeks but well-understood technically. Not a weekend project, but not a moonshot. |
-| **3. Maintenance Burden** | 3 | V0 is low maintenance (simple routing). V1 depends on email provider APIs which can change. Gmail OAuth is a recurring maintenance concern. LLM costs are ongoing but predictable. |
-| **4. Overwhelm Impact** | 5 | This is the entire point. If V0 + V1 work, the daily email/capture overwhelm drops dramatically. Net overwhelm reduction is the core thesis. |
-| **5. Simplest Platform** | 3 | V0 could be simpler (Siri Shortcut exists already) but LLM routing adds genuine value over static shortcuts. V1 genuinely needs a server + iOS app. Can't shortcut this further without losing the value. |
-| **6. Already Exists Check** | 3 | V0: nothing does LLM-powered capture routing from a single input. V1: SaneBox gets close. Need to try SaneBox before committing to V1. Honest score reflects that V1 might be partially solved already. |
-| **Total** | **23** | **Probably worth it — but try SaneBox before committing to V1.** |
+| **1. Personal Pain Severity** | 5 | 6 email accounts, daily admin paralysis, family life scattered across apps, ideas lost because capture is too slow. Multi-times-daily frustration. |
+| **2. Build Simplicity** | 4 | V0 is part of the household app build (not standalone). Email workflow is zero-build — just a CC session. The complexity is in the household app, not Eave itself. |
+| **3. Maintenance Burden** | 4 | V0 maintenance is tied to the household app. Email CC workflow has zero maintenance — it's a manual process. No APIs to break, no OAuth to maintain. |
+| **4. Overwhelm Impact** | 5 | This is the entire point. Capture routing + weekly email triage = significant daily overwhelm reduction. |
+| **5. Simplest Platform** | 4 | Email triage reframed as CC workflow is the simplest possible platform — no app, no server, no code. V0 as part of the household app avoids building a standalone tool. |
+| **6. Already Exists Check** | 3 | V0 routing: nothing does LLM-powered intent routing from a single input to household modules. Email: SaneBox and Apple Intelligence exist but don't match the CC workflow's flexibility. |
+| **Total** | **25** | **Build it.** V0 as household app ingest layer. Email as CC workflow. |
 
-V0 alone scores higher (would be 26-27) because the build is simpler and nothing adequate exists. The combined V0+V1 score is pulled down by V1's maintenance burden and the SaneBox alternative. The recommendation: **build V0 now, try SaneBox for V1's problem space, then decide on V1.**
+The reframing significantly improved the score. Moving email to a CC workflow eliminated the biggest build complexity and maintenance concerns. V0 as part of the household app gives it a clear home instead of floating as a standalone tool.
