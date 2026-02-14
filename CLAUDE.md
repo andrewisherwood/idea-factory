@@ -34,35 +34,41 @@ These are the existing products in the Dopamine Labs portfolio. Know them well �
 
 ## Idea Lifecycle
 
+Ideas are evaluated on two tracks. **Track A (Personal Tool)** is the default. **Track B (Product)** activates only when a personal tool has proven its value and Andy consciously decides to productise.
+
+### Track A: Personal Tool (default)
+
 ```
-inbox/ → ideas/<name>/ → tri-model review → promoted/ | parked/ | killed/
+inbox/ → ideas/<name>/ → [optional tri-model review] → build / park / kill
 ```
 
-### 1. Inbox
-Raw captures land in `inbox/` as individual markdown files. Naming convention: `YYYY-MM-DD-short-slug.md`. These are brain dumps — no structure required. A single sentence is enough.
+1. **Inbox** — Raw captures land in `inbox/` as `YYYY-MM-DD-short-slug.md`. Brain dumps, no structure required.
+2. **Scoping** — When an idea has legs, promote to `ideas/<idea-name>/` with `CAPTURE.md` and `SCOPING.md`. Evaluate using Track A criteria in `frameworks/EVALUATION.md`.
+3. **Review** (optional) — Tri-model adversarial review recommended for anything with significant build investment. Not mandatory for Track A.
+4. **Decision** — Build it, park it, or kill it. Built personal tools stay in their repo and get used.
 
-### 2. Scoping
-When an idea has legs, promote it to `ideas/<idea-name>/` with:
-- `CAPTURE.md` — the original dump, preserved verbatim
-- `SCOPING.md` — structured assessment using the template in `ideas/_template/`
+### Track B: Product (conscious promotion)
 
-### 3. Tri-Model Review
-Completed SCOPING.md is reviewed adversarially by Claude, GPT, and Gemini. Findings captured in `TRI-MODEL-REVIEW.md`. SCOPING.md updated with surfaced issues.
+```
+[personal use 4+ weeks] → Track B promotion gate → tri-model review → marketing brief → promoted/ → MAI
+```
 
-### 4. Decision
-After review, the idea gets one of three outcomes:
-- **Promoted** → Moved to `promoted/` with a summary and a completed `MARKETING-BRIEF.md`. No idea goes to build without a marketing brief.
-- **Parked** → Moved to `parked/` with rationale. Revisited during periodic reviews.
-- **Killed** → Moved to `killed/` with rationale. Preserved for reference, not deleted.
+1. **Promotion gate** — Complete `TRACK-PROMOTION.md`. All promotion criteria must be met (see `frameworks/EVALUATION.md`).
+2. **Track B evaluation** — Re-score using full Track B criteria (14 criteria, max 70).
+3. **Tri-model review** (mandatory) — Adversarial review focused on market viability, compliance, and competitive landscape.
+4. **Decision** — One of three outcomes:
+   - **Promoted** → Moved to `promoted/` with a completed `MARKETING-BRIEF.md`. No product goes to build without a marketing brief.
+   - **Parked** → Moved to `parked/` with rationale. Revisited during periodic reviews.
+   - **Killed** → Moved to `killed/` with rationale. Preserved for reference.
 
-### 5. Review
+### Periodic Review
 Weekly review sessions generate a report in `reviews/YYYY-MM-DD.md`.
 
 ## Tri-Model Adversarial Review
 
-After scoping is complete and before the promote/park/kill decision, ideas go through a tri-model adversarial review. This is a hard gate — no idea gets promoted without it.
+**Mandatory for Track B. Optional but recommended for Track A.**
 
-**Purpose:** Surface blind spots, roadblocks, and unstated assumptions that Claude missed during scoping. This hardens the SCOPING.md itself. This is distinct from MAI's adversarial plan review, which hardens the build plan — different stage, different purpose.
+**Purpose:** Surface blind spots, roadblocks, and unstated assumptions. This hardens the SCOPING.md itself. Distinct from MAI's adversarial plan review, which hardens the build plan — different stage, different purpose.
 
 **Process:**
 1. Andy (or Claude) prepares the SCOPING.md for review
@@ -72,6 +78,10 @@ After scoping is complete and before the promote/park/kill decision, ideas go th
 5. SCOPING.md is updated with any new risks, considerations, or open questions surfaced
 6. Only then does the idea proceed to decision
 
+**Track-aware prompting:**
+- Track A reviewers should evaluate against personal utility, build simplicity, and maintenance burden
+- Track B reviewers should evaluate against market viability, competitive landscape, and compliance
+
 **When reviewing your own scoping work adversarially:**
 - Do not soften your critique because you wrote the scoping doc
 - Actively look for where you were optimistic or hand-wavy
@@ -79,9 +89,9 @@ After scoping is complete and before the promote/park/kill decision, ideas go th
 - If GPT glazed and you didn't, note it — but also check whether GPT spotted something genuinely positive that you dismissed
 
 **Models and their tendencies (calibration notes):**
-- **Claude:** Generally strong on technical feasibility and honest assessment. Watch for over-indexing on complexity.
-- **GPT:** Tendency to glaze — treat excessive positivity as a signal to probe harder. When GPT is critical, pay extra attention because it means the issue is hard to ignore.
-- **Gemini:** Often strong on competitive landscape and market analysis. Can be verbose — extract the signal.
+- **Claude:** Strong on technical feasibility and honest assessment. Watch for over-indexing on complexity and SaaS assumptions.
+- **GPT:** Can glaze — but on the Eave review, engaged critically with zero glaze. When GPT is critical, pay extra attention. When GPT glazes, probe harder.
+- **Gemini:** Strong on competitive landscape and platform risk. Can be verbose — extract the signal. "Cognitive Buffer Layer" framing from Eave review was the most actionable reframe.
 
 These calibration notes should be updated over time as patterns emerge across reviews.
 
@@ -92,7 +102,8 @@ These calibration notes should be updated over time as patterns emerge across re
 - **When an idea conflicts with or overlaps an existing product, flag it immediately.** Don't let Andy accidentally cannibalise his own work.
 - **Always ask which codebase/platform a brief targets** before generating it (PWA vs iOS vs both).
 - **Scoping documents must be named `SCOPING.md`.**
-- **Every promoted idea must have a completed `MARKETING-BRIEF.md` before handoff to MAI.** Use the template in `ideas/_template/`. This is a hard gate — no brief, no build.
+- **Every Track B idea promoted to product must have a completed `MARKETING-BRIEF.md` before handoff to MAI.** Use the template in `ideas/_template/`. This is a hard gate — no brief, no build.
+- **Default track is always A (personal tool).** When scoping, always clarify: "Are we evaluating this as a personal tool or a product?" Most ideas should stay on Track A. A good personal tool is a success — it doesn't need to become a product.
 - **15 hours/week is the hard constraint.** Every new idea competes with existing commitments. Be ruthless about prioritisation.
 
 ## Periodic Review Protocol

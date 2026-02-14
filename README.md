@@ -10,20 +10,32 @@ The primary interface is [Claude Code](https://claude.ai/code) with Opus. No web
 
 ## Lifecycle
 
-Every idea follows the same path:
+Ideas are evaluated on two tracks. Most stay on Track A (personal tool). Track B (product) activates only when a personal tool has proven its value.
+
+### Track A: Personal Tool (default)
 
 ```
-inbox/ → ideas/ → tri-model review → promoted/ | parked/ | killed/
+inbox/ → ideas/ → [optional review] → build / park / kill
 ```
 
 1. **Inbox** — Brain dump. A single sentence, a paragraph, a voice-to-text ramble. Drop it in `inbox/` as `YYYY-MM-DD-short-slug.md` and move on.
-2. **Scoping** — When an idea has legs, it gets promoted to `ideas/<idea-name>/` with a structured scoping document. This is where it gets stress-tested against the evaluation framework.
-3. **Tri-Model Review** — Completed scoping doc is sent to Claude, GPT, and Gemini with an adversarial prompt. Findings synthesised, SCOPING.md updated with surfaced issues.
-4. **Decision** — Every reviewed idea gets a verdict:
-   - **Promoted** — Green light. A `MARKETING-BRIEF.md` is completed, then moved to `promoted/` for handoff to MAI.
-   - **Parked** — Not now, but not never. Moved to `parked/`, revisited during reviews.
-   - **Killed** — Dead, with dignity. Moved to `killed/`, preserved for reference.
-5. **Review** — Periodic review sessions triage the inbox, reassess parked ideas, and check portfolio health.
+2. **Scoping** — When an idea has legs, it gets promoted to `ideas/<idea-name>/` with a structured scoping document. Evaluated against Track A criteria (personal utility, build simplicity, maintenance burden).
+3. **Decision** — Build it, park it, or kill it.
+
+### Track B: Product (conscious promotion)
+
+```
+[personal use 4+ weeks] → promotion gate → tri-model review → marketing brief → promoted/ → MAI
+```
+
+When a personal tool has proven its value (4+ weeks of use, genuine interest from others, Andy actively wants to productise), it can be promoted to Track B for full product evaluation, adversarial review, and marketing brief.
+
+- **Promoted** — Green light. `MARKETING-BRIEF.md` completed, moved to `promoted/` for handoff to MAI.
+- **Parked** — Not now, but not never. Moved to `parked/`, revisited during reviews.
+- **Killed** — Dead, with dignity. Moved to `killed/`, preserved for reference.
+
+### Review
+Periodic review sessions triage the inbox, reassess parked ideas, and check portfolio health.
 
 ## How to use it
 
